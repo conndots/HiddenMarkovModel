@@ -87,7 +87,7 @@ public class HMModel<OT, ST> {
 	 */
 	public LinkedList<ST> bestStatusSequence(){
 		Layer lastLayer = this.layers.get(this.layers.size() - 1);
-		ListIterator<Layer> iter = layers.listIterator(layers.size() - 1);
+		ListIterator<Layer> iter = layers.listIterator(layers.size());
 		LinkedList<ST> ret = new LinkedList<ST>();
 		int maxIndex = lastLayer.maxViterbiIndex;
 		while(iter.hasPrevious()){
@@ -95,9 +95,6 @@ public class HMModel<OT, ST> {
 			Layer.StatusNode sn = l.statuses.get(maxIndex);
 			ret.addFirst(sn.status);
 			maxIndex = sn.inversePointer;
-		}
-		if(!iter.hasPrevious()){
-			ret.add(lastLayer.statuses.get(lastLayer.maxViterbiIndex).status);
 		}
 		return ret;
 	}
