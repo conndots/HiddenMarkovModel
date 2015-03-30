@@ -1,5 +1,3 @@
-package Running.HMModel;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -30,8 +28,8 @@ class NewComparator<ST> implements Comparator<LinkedList<ST>>{
  * 
  * @author lxq
  *
- * @param <OT> ¹Û²ìÖµµÄÀàĞÍ
- * @param <ST> ×´Ì¬ÖµµÄÀàĞÍ
+ * @param <OT> è§‚å¯Ÿå€¼çš„ç±»å‹
+ * @param <ST> çŠ¶æ€å€¼çš„ç±»å‹
  */
 public class HMModel<OT, ST> {
 	private ArrayList<Layer> layers;
@@ -42,11 +40,11 @@ public class HMModel<OT, ST> {
 	
 	/**
 	 * 
-	 * @param t ×ªÒÆ¾ØÕó
-	 * @param c »ìÏı¾ØÕó
-	 * @param iv ³õÊ¼ÏòÁ¿
-	 * @param fir µÚÒ»¸ö¹Û²ìÖµ
-	 * @param firStatuses µÚÒ»¸ö¹Û²ìÖµ¶ÔÓ¦µÄ×´Ì¬Öµ ×¢ÒâÒª¸ú³õÊ¼ÏòÁ¿Ò»Ò»¶ÔÓ¦
+	 * @param t è½¬ç§»çŸ©é˜µ
+	 * @param c æ··æ·†çŸ©é˜µ
+	 * @param iv åˆå§‹å‘é‡
+	 * @param fir ç¬¬ä¸€ä¸ªè§‚å¯Ÿå€¼
+	 * @param firStatuses ç¬¬ä¸€ä¸ªè§‚å¯Ÿå€¼å¯¹åº”çš„çŠ¶æ€å€¼ æ³¨æ„è¦è·Ÿåˆå§‹å‘é‡ä¸€ä¸€å¯¹åº”
 	 */
 	public HMModel(TransitionMatrix<ST> t, ConfusionMatrix<ST, OT> c, ArrayList<Double> iv, OT fir, Iterator<ST> firStatuses){
 		this.tm = t;
@@ -104,7 +102,7 @@ public class HMModel<OT, ST> {
 	}
 	
 	/**
-	 * µ±HMMÓĞÁ½²ãÊ±·µ»Øº¬ÓĞËùÓĞ¿ÉÄÜÂ·¾¶µÄÓÅÏÈ¼¶¶ÓÁĞ Èô²»ÊÇÁ½²ã£¬·µ»Ønull
+	 * å½“HMMæœ‰ä¸¤å±‚æ—¶è¿”å›å«æœ‰æ‰€æœ‰å¯èƒ½è·¯å¾„çš„ä¼˜å…ˆçº§é˜Ÿåˆ— è‹¥ä¸æ˜¯ä¸¤å±‚ï¼Œè¿”å›null
 	 * @return
 	 */
 	public PriorityQueue<LinkedList<ST>> rankedStatusPairsListIn2Layers(){
@@ -142,7 +140,7 @@ public class HMModel<OT, ST> {
 		private double sumObsPOfLayer;
 		private int maxViterbiIndex;
 		
-		//Ö®ºóµÄ²ã´ÎÊ¹ÓÃÕâ¸ö´´½¨
+		//ä¹‹åçš„å±‚æ¬¡ä½¿ç”¨è¿™ä¸ªåˆ›å»º
 		Layer(OT obs, Iterator<ST> iter, int layerN){
 			this.observ = obs;
 			this.layerNum = layerN;
@@ -162,7 +160,7 @@ public class HMModel<OT, ST> {
 			}
 		}
 		
-		//HMMµÚÒ»²ãÊ¹ÓÃÕâ¸ö³õÊ¼»¯
+		//HMMç¬¬ä¸€å±‚ä½¿ç”¨è¿™ä¸ªåˆå§‹åŒ–
 		Layer(OT obs, Iterator<ST> iter){
 			this.layerNum = 0;
 			this.observ = obs;
@@ -202,12 +200,12 @@ public class HMModel<OT, ST> {
 				if(HMModel.Layer.this.layerNum > 0){
 					Layer lastLayer = HMModel.this.layers.get(HMModel.Layer.this.layerNum - 1);
 					
-					//¼ÆËã¹Û²ìÖµµÄ¾Ö²¿¸ÅÂÊ
+					//è®¡ç®—è§‚å¯Ÿå€¼çš„å±€éƒ¨æ¦‚ç‡
 					observePLocalValue = lastLayer.sumObsPOfLayer 
 							* HMModel.this.cm.transformProbability(this.status, HMModel.Layer.this.observ);
 					this.viterbiLocalValue = 0.0;
 					
-					//¼ÆËãViterbiËã·¨µÄ¾Ö²¿¸ÅÂÊ
+					//è®¡ç®—Viterbiç®—æ³•çš„å±€éƒ¨æ¦‚ç‡
 					int index = 0;
 					this.viterbiLocalValue = 0.0;
 					for(StatusNode sn : lastLayer.statuses){
